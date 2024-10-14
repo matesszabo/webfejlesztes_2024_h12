@@ -1,4 +1,4 @@
-package hu.unideb.inf.rendeles.controller;
+package hu.unideb.inf.rendeles.data.entity;
 
 import jakarta.persistence.*;
 
