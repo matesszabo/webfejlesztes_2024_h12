@@ -75,6 +75,14 @@ public class TermekEntity {
         this.nev = nev;
     }
 
+    public HelyEntity getHely() {
+        return hely;
+    }
+
+    public void setHely(HelyEntity hely) {
+        this.hely = hely;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

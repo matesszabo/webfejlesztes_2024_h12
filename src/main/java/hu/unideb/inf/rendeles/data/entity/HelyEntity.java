@@ -16,6 +16,9 @@ public class HelyEntity {
     @Column(name = "polc", nullable = false)
     private int polc;
 
+    @OneToOne(mappedBy = "hely")
+    private TermekEntity termek;
+
     public HelyEntity() {
     }
 
@@ -47,6 +50,14 @@ public class HelyEntity {
 
     public void setPolc(int polc) {
         this.polc = polc;
+    }
+
+    public TermekEntity getTermek() {
+        return termek;
+    }
+
+    public void setTermek(TermekEntity termek) {
+        this.termek = termek;
     }
 
     @Override
