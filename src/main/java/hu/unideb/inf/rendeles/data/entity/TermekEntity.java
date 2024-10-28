@@ -20,7 +20,7 @@ public class TermekEntity {
     @Column(name = "nev")
     private String nev;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "hely_id", referencedColumnName = "id")
     private HelyEntity hely;
 
