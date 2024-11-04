@@ -69,4 +69,33 @@ public class TermekManagementServiceImpl implements TermekManagementService {
     public void delete(Long id) {
         repo.deleteById(id);
     }
+
+    @Override
+    public List<TermekDto> findAllByNevKod(String nev) {
+        List<TermekEntity> valogatott = new ArrayList<TermekEntity>();
+        valogatott = repo.findAll()
+                .stream()
+                .filter(x -> x.getNev().equals(nev))
+                .toList();
+
+        return mapper.map(valogatott, new TypeToken<List<TermekDto>>(){}.getType());
+    }
+
+    @Override
+    public List<TermekDto> findAllByNevDb(String nev) {
+        return mapper.map(repo.findAllByNev(nev), new TypeToken<List<TermekDto>>(){}.getType());
+    }
+
+    @Override
+    public List<TermekDto> findAllByAny(String meret, Float suly, Integer mennyiseg, String nev) {
+        List<TermekEntity> termekek = repo.findAll();
+        termekek = termekek.stream()
+                .filter(x -> nev == null || x.getNev().equals(nev))
+                .filter(x -> suly == null || x.getSuly().equals(suly))
+                .filter(x -> mennyiseg == null || x.getMennyiseg().equals(mennyiseg))
+                .filter(x -> meret == null || x.getMeret().equals(meret))
+                .toList();
+
+        return mapper.map(termekek, new TypeToken<List<TermekDto>>(){}.getType());
+    }
 }
