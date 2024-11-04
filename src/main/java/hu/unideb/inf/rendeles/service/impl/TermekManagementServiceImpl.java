@@ -5,9 +5,11 @@ import hu.unideb.inf.rendeles.data.repository.TermekRepository;
 import hu.unideb.inf.rendeles.service.TermekManagementService;
 import hu.unideb.inf.rendeles.service.dto.TermekDto;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -55,11 +57,16 @@ public class TermekManagementServiceImpl implements TermekManagementService {
 
     @Override
     public List<TermekDto> findAll() {
-        return List.of();
+        List<TermekEntity> entities = repo.findAll();
+        List<TermekDto> dtos = new ArrayList<>();
+
+        dtos = mapper.map(entities, new TypeToken<List<TermekDto>>(){}.getType());
+
+        return dtos;
     }
 
     @Override
     public void delete(Long id) {
-
+        repo.deleteById(id);
     }
 }
