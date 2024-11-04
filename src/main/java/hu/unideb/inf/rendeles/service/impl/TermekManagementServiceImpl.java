@@ -4,6 +4,7 @@ import hu.unideb.inf.rendeles.data.entity.TermekEntity;
 import hu.unideb.inf.rendeles.data.repository.TermekRepository;
 import hu.unideb.inf.rendeles.service.TermekManagementService;
 import hu.unideb.inf.rendeles.service.dto.TermekDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,13 @@ public class TermekManagementServiceImpl implements TermekManagementService {
     @Autowired
     TermekRepository repo;
 
+    @Autowired
+    ModelMapper mapper;
+
     @Override
     public TermekDto save(TermekDto termekDto) {
+        //ModelMapper modelMapper = new ModelMapper();
+
         TermekEntity entity = new TermekEntity();
 
         entity.setNev(termekDto.getNev());
@@ -37,7 +43,14 @@ public class TermekManagementServiceImpl implements TermekManagementService {
 
     @Override
     public TermekDto findById(Long id) {
-        return null;
+        //return mapper.map(repo.getReferenceById(id), TermekDto.class);
+
+        TermekEntity entity = repo.getReferenceById(id);
+        TermekDto dto = new TermekDto();
+
+        dto = mapper.map(entity, TermekDto.class);
+
+        return dto;
     }
 
     @Override
