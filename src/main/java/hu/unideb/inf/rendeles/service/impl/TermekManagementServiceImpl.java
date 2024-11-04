@@ -1,0 +1,52 @@
+package hu.unideb.inf.rendeles.service.impl;
+
+import hu.unideb.inf.rendeles.data.entity.TermekEntity;
+import hu.unideb.inf.rendeles.data.repository.TermekRepository;
+import hu.unideb.inf.rendeles.service.TermekManagementService;
+import hu.unideb.inf.rendeles.service.dto.TermekDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class TermekManagementServiceImpl implements TermekManagementService {
+
+    @Autowired
+    TermekRepository repo;
+
+    @Override
+    public TermekDto save(TermekDto termekDto) {
+        TermekEntity entity = new TermekEntity();
+
+        entity.setNev(termekDto.getNev());
+        entity.setHely(null);
+        entity.setSuly(termekDto.getSuly());
+        entity.setMeret(termekDto.getMeret());
+        entity.setMennyiseg(null);
+
+        entity = repo.save(entity);
+
+        TermekDto dto = new TermekDto(entity.getId(),
+                entity.getMeret(),
+                entity.getSuly(),
+                entity.getNev());
+
+        return dto;
+    }
+
+    @Override
+    public TermekDto findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<TermekDto> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+}
