@@ -5,9 +5,13 @@ import hu.unideb.inf.rendeles.data.entity.JogosultsagEntity;
 import hu.unideb.inf.rendeles.data.repository.FelhasznaloRepository;
 import hu.unideb.inf.rendeles.data.repository.JogosultsagRepository;
 import hu.unideb.inf.rendeles.service.AuthenticationService;
+import hu.unideb.inf.rendeles.service.dto.BejelentkezesDto;
 import hu.unideb.inf.rendeles.service.dto.RegisztracioDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    AuthenticationManager manager;
+
     @Override
     public void regisztracio(RegisztracioDto dto) {
         FelhasznaloEntity felhasznaloEntity = modelMapper.map(dto, FelhasznaloEntity.class);
@@ -39,5 +46,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         repo.save(felhasznaloEntity);
 
+    }
+
+    @Override
+    public void bejelentkezes(BejelentkezesDto dto) {
+        manager.authenticate(
+                new UsernamePasswordAuthenticationToken(dto.getEmail(),dto.getJelszo())
+        );
     }
 }
