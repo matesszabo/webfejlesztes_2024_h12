@@ -20,7 +20,7 @@ public class FelhasznaloEntity implements UserDetails {
     @Column(name = "jelszo")
     private String jelszo;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<JogosultsagEntity> jogosultsagok;
 
     public FelhasznaloEntity() {
