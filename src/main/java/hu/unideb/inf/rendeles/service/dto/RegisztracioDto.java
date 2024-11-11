@@ -6,7 +6,7 @@ public class RegisztracioDto {
 
     private String nev;
     private String email;
-    private String password;
+    private String jelszo;
 
     public RegisztracioDto() {
     }
@@ -14,7 +14,7 @@ public class RegisztracioDto {
     public RegisztracioDto(String nev, String email, String password) {
         this.nev = nev;
         this.email = email;
-        this.password = password;
+        this.jelszo = password;
     }
 
     public String getNev() {
@@ -33,12 +33,12 @@ public class RegisztracioDto {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getJelszo() {
+        return jelszo;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setJelszo(String jelszo) {
+        this.jelszo = jelszo;
     }
 
     @Override
@@ -46,11 +46,11 @@ public class RegisztracioDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RegisztracioDto that = (RegisztracioDto) o;
-        return Objects.equals(nev, that.nev) && Objects.equals(email, that.email) && Objects.equals(password, that.password);
+        return Objects.equals(nev, that.nev) && Objects.equals(email, that.email) && Objects.equals(jelszo, that.jelszo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nev, email, password);
+        return Objects.hash(nev, email, jelszo);
     }
 }
