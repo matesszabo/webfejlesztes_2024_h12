@@ -28,7 +28,7 @@ public class JwtServiceImpl implements JwtService {
         Map<String, Object> claims = new HashMap<>();
         userDetails.getAuthorities().forEach(authority -> claims.put(authority.getAuthority(), authority));
 
-        byte[] keyBytes = Decoders.BASE64.decode("secret");
+        byte[] keyBytes = Decoders.BASE64.decode("t7zu7zgzuhgtgzttzugttz7t7ztt7ztz67ftz7tz7frz67tfrrzt6fr5tdrfzgzughui8g7zfr67ztfrz67tftz6fd67zfrtdt67zfd67zfd67zgzt");
         SecretKey key = Keys.hmacShaKeyFor(keyBytes);
 
         return Jwts.builder()
@@ -52,11 +52,11 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers){
-        byte[] keyBytes = Decoders.BASE64.decode("secret");
+        byte[] keyBytes = Decoders.BASE64.decode("t7zu7zgzuhgtgzttzugttz7t7ztt7ztz67ftz7tz7frz67tfrrzt6fr5tdrfzgzughui8g7zfr67ztfrz67tftz6fd67zfrtdt67zfd67zfd67zgzt");
         SecretKey key = Keys.hmacShaKeyFor(keyBytes);
 
         final Claims claims = Jwts.parser()
-                .decryptWith(key)
+                .verifyWith(key)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
