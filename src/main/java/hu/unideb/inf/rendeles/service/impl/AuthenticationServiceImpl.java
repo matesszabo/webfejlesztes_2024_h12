@@ -5,6 +5,7 @@ import hu.unideb.inf.rendeles.data.entity.JogosultsagEntity;
 import hu.unideb.inf.rendeles.data.repository.FelhasznaloRepository;
 import hu.unideb.inf.rendeles.data.repository.JogosultsagRepository;
 import hu.unideb.inf.rendeles.service.AuthenticationService;
+import hu.unideb.inf.rendeles.service.JwtService;
 import hu.unideb.inf.rendeles.service.dto.BejelentkezesDto;
 import hu.unideb.inf.rendeles.service.dto.RegisztracioDto;
 import org.modelmapper.ModelMapper;
@@ -31,8 +32,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     AuthenticationManager manager;
 
+    @Autowired
+    JwtService jwtService;
+
     @Override
-    public void regisztracio(RegisztracioDto dto) {
+    public String regisztracio(RegisztracioDto dto) {
         FelhasznaloEntity felhasznaloEntity = modelMapper.map(dto, FelhasznaloEntity.class);
         felhasznaloEntity.setJelszo(encoder.encode(felhasznaloEntity.getJelszo()));
         JogosultsagEntity jog = jogRepo.findByNev("FELHASZNALO");
@@ -44,14 +48,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             felhasznaloEntity.setJogosultsagok(Set.of(jog));
         }
 
-        repo.save(felhasznaloEntity);
+        felhasznaloEntity = repo.save(felhasznaloEntity);
+
+        return jwtService.generateToken(felhasznaloEntity);
 
     }
 
     @Override
-    public void bejelentkezes(BejelentkezesDto dto) {
+    public String bejelentkezes(BejelentkezesDto dto) {
         manager.authenticate(
                 new UsernamePasswordAuthenticationToken(dto.getEmail(),dto.getJelszo())
         );
+        var user = repo.findByEmail(dto.getEmail());
+        return jwtService.generateToken(user);
     }
 }
