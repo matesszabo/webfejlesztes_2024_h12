@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//@CrossOrigin(origins = "localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class TermekController {
