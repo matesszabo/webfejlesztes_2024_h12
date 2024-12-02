@@ -4,6 +4,7 @@ import hu.unideb.inf.rendeles.data.repository.TermekRepository;
 import hu.unideb.inf.rendeles.service.TermekManagementService;
 import hu.unideb.inf.rendeles.service.dto.TermekDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,11 @@ public class TermekController {
 
     @Autowired
     TermekManagementService service;
+
+    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
+    public ResponseEntity<Void> handleOptions(){
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping("/savetermek")
     public TermekDto saveTermek(@RequestBody TermekDto termek) {
